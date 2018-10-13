@@ -1,9 +1,9 @@
 package io.vertx.starter.model;
 
 public enum Region {
-  EUROPE_WEST("EUW1"),
-  NORTH_AMERICA("NA1"),
-  JAPAN("NA1"),
+  EUROPE_WEST("euw1"),
+  NORTH_AMERICA("na1"),
+  JAPAN("jp1"),
   BRAZIL("BR1"),
   OCEANIA("OC1"),
   RUSSIA("RU"),

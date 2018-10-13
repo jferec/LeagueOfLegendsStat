@@ -1,5 +1,5 @@
 package io.vertx.starter.model;
 
-public class Match {
+public class Timeline {
 
 }

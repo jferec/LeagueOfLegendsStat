@@ -1,5 +1,6 @@
 package io.vertx.starter;
 
+import com.google.gson.Gson;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Launcher;
