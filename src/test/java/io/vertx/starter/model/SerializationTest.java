@@ -2,6 +2,9 @@ package io.vertx.starter.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.vertx.starter.model.timeline.MatchFrame;
+import io.vertx.starter.model.timeline.MatchParticipantFrame;
+import io.vertx.starter.model.timeline.MatchTimeline;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,8 +30,7 @@ class SerializationTest {
     try {
       json = loadTestJsonFromFile("matchreference.json");
     } catch (IOException e) {
-      e.printStackTrace();
-      throw new IllegalStateException("Test failed");
+      throw new IllegalStateException("File failed to load");
     }
     matchReference = gson.fromJson(json, MatchReference.class);
     Assertions.assertEquals(matchReference.getSeason(), 11);
@@ -44,12 +46,13 @@ class SerializationTest {
 
   @Test
   void testSummonerSerialization() {
+
     String json;
     Summoner uman;
     try {
       json = loadTestJsonFromFile("summoner.json");
     } catch (IOException e) {
-      throw new IllegalStateException("Test failed");
+      throw new IllegalStateException("File failed to load");
     }
     uman = gson.fromJson(json, Summoner.class);
     Assertions.assertEquals(uman.getAccountId(), 23548296);
@@ -64,20 +67,84 @@ class SerializationTest {
 
   @Test
   void testMatchlistSerialization() {
+
     String json;
     Matchlist matchlist;
     try {
       json = loadTestJsonFromFile("matchlist.json");
     } catch (IOException e) {
-      throw new IllegalStateException("Test failed");
+      throw new IllegalStateException("File failed to load");
     }
     matchlist = gson.fromJson(json, Matchlist.class);
     ArrayList<MatchReference> matches = matchlist.getMatches();
     Assertions.assertEquals(matches.size(), 100);
+    Assertions.assertEquals(matchlist.getEndIndex() - matchlist.getStartIndex(), matches.size());
     MatchReference match = matches.get(0);
     Assertions.assertEquals(match.getGameId(), 2055163498);
     match = matches.get(90);
     Assertions.assertEquals(match.getTimestamp(), 1524731268836L);
+
+  }
+
+  @Test
+  void testMatchParticipantFrameSerialization() {
+
+    String json;
+    MatchParticipantFrame matchParticipantFrame;
+    try {
+      json = loadTestJsonFromFile("participantframe.json");
+    } catch (IOException e) {
+      throw new IllegalStateException("File failed to load");
+    }
+    matchParticipantFrame = gson.fromJson(json, MatchParticipantFrame.class);
+    Assertions.assertEquals(matchParticipantFrame.getCurrentGold(), 1391);
+    Assertions.assertEquals(matchParticipantFrame.getTotalGold(), 5066);
+    Assertions.assertEquals(matchParticipantFrame.getLevel(), 9);
+    Assertions.assertEquals(matchParticipantFrame.getMinionsKilled(), 22);
+    Assertions.assertEquals(matchParticipantFrame.getParticipantId(), 8);
+    Assertions.assertEquals(matchParticipantFrame.getXp(), 5760);
+    Assertions.assertEquals(matchParticipantFrame.getJungleMinionsKilled(), 31);
+
+  }
+
+  @Test
+  void testMatchFrameSerialization() {
+
+    String json;
+    MatchFrame matchFrame;
+    try {
+      json = loadTestJsonFromFile("matchframe.json");
+    } catch (IOException e) {
+      throw new IllegalArgumentException("File failed to load");
+    }
+    matchFrame = gson.fromJson(json, MatchFrame.class);
+    Assertions.assertEquals(matchFrame.getTimestamp(), 1380670);
+    Assertions.assertNull(matchFrame.getParticipantFrames().get(0));
+    Assertions.assertNotNull(matchFrame.getParticipantFrames().get(10));
+    MatchParticipantFrame participantFrame = matchFrame.getParticipantFrames().get(2);
+    Assertions.assertEquals(participantFrame.getXp(), 10391);
+    Assertions.assertEquals(participantFrame.getMinionsKilled(), 170);
+    Assertions.assertEquals(participantFrame.getTotalGold(), 9202);
+    Assertions.assertEquals(participantFrame.getParticipantId(), 2);
+    Assertions.assertEquals(participantFrame.getLevel(), 13);
+    Assertions.assertEquals(participantFrame.getJungleMinionsKilled(), 11);
+
+  }
+
+  @Test
+  void testMatchTimelineSerialization() {
+
+    String json;
+    MatchTimeline matchTimeline;
+    try {
+      json = loadTestJsonFromFile("matchtimeline.json");
+    } catch (IOException e) {
+      throw new IllegalArgumentException("File failed to load");
+    }
+    matchTimeline = gson.fromJson(json, MatchTimeline.class);
+    Assertions.assertEquals(matchTimeline.getFrameInterval(), 60000);
+    Assertions.assertEquals(matchTimeline.getFrames().size(), 38);
+    Assertions.assertEquals(matchTimeline.getFrames().get(25).getParticipantFrames().size(), 10);
   }
 
   private String loadTestJsonFromFile(String fileName) throws IOException {

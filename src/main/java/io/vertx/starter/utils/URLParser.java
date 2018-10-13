@@ -5,8 +5,7 @@ import java.util.Map;
 
 public class URLParser {
 
-  public static String putParamsToURL(String url, Map<String, String> params)
-      throws IllegalArgumentException {
+  public static String putParamsToURL(String url, Map<String, String> params) {
     StringBuilder sb = new StringBuilder(url);
     try {
       for (int i = 0; i < params.size(); i++) {
