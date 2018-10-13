@@ -29,8 +29,7 @@ class URLParserTest {
     Map<String, String> params = new HashMap<>();
     params.put(URLConstants.REGION, Region.NORTH_AMERICA.getName());
     params.put("abcdefgh", "illegalParam");
-    Assertions.assertThrows(IllegalArgumentException.class,
-        () -> URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params));
+    Assertions.assertEquals(URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params), null);
   }
 
   @Test
@@ -39,8 +38,7 @@ class URLParserTest {
     params.put(URLConstants.REGION, Region.NORTH_AMERICA.getName());
     params.put(URLConstants.ACCOUNT_ID, "someRandomAccountId");
     params.put(URLConstants.SUMMONER_ID, "someRandomSummonerId");
-    Assertions.assertThrows(IllegalArgumentException.class,
-        () -> URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params));
+    Assertions.assertEquals(URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params), null);
   }
 
 }
