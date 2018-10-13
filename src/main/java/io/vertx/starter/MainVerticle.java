@@ -2,8 +2,13 @@ package io.vertx.starter;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
+import io.vertx.core.Launcher;
 
 public class MainVerticle extends AbstractVerticle {
+
+  public static void main(final String[] args) {
+    Launcher.executeCommand("run", MainVerticle.class.getName());
+  }
 
   @Override
   public void start(Future<Void> startFuture) throws Exception {
@@ -11,7 +16,7 @@ public class MainVerticle extends AbstractVerticle {
       req.response()
         .putHeader("content-type", "text/plain")
         .end("Hello from Vert.x!");
-    }).listen(8080, http -> {
+    }).listen(8081, http -> {
       if (http.succeeded()) {
         startFuture.complete();
         System.out.println("HTTP server started on http://localhost:8080");
