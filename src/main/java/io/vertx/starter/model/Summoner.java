@@ -6,12 +6,18 @@ public class Summoner {
 
   @SerializedName("id")
   private long summonerId;
-  private long accountId;
+  @SerializedName("currentPlatformId")
   private Region region;
+  private long accountId;
   private int profileIconId;
   private String name;
   private long summonerLevel;
   private long revisionDate;
+  private String matchHistoryUri;
+
+  public String getMatchHistoryUri() {
+    return matchHistoryUri;
+  }
 
   public long getSummonerId() {
     return summonerId;

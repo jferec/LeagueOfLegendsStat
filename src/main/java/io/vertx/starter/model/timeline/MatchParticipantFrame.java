@@ -11,12 +11,11 @@ public class MatchParticipantFrame {
   private int currentGold;
   private int minionsKilled;
   private int xp;
+  private int jungleMinionsKilled;
 
   public int getXp() {
     return xp;
   }
-
-  private int jungleMinionsKilled;
 
   public int getParticipantId() {
     return participantId;

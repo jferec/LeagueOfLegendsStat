@@ -2,6 +2,8 @@ package io.vertx.starter.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.vertx.starter.model.match.ParticipantStats;
+import io.vertx.starter.model.match.deserializers.ParticipantStatsDeserializer;
 import io.vertx.starter.model.timeline.MatchFrame;
 import io.vertx.starter.model.timeline.MatchParticipantFrame;
 import io.vertx.starter.model.timeline.MatchTimeline;
@@ -19,11 +21,13 @@ class SerializationTest {
 
   @BeforeAll
   static void setUp() {
-    gson = new GsonBuilder().create();
+    gson = new GsonBuilder()
+        .registerTypeAdapter(ParticipantStats.class,
+            new ParticipantStatsDeserializer()).create();
   }
 
   @Test
-  void testMatchReferenceSerialization() {
+  void testMatchReferenceDeserialization() {
 
     String json;
     MatchReference matchReference;
@@ -45,7 +49,7 @@ class SerializationTest {
   }
 
   @Test
-  void testSummonerSerialization() {
+  void testSummonerDeserialization() {
 
     String json;
     Summoner uman;
@@ -56,6 +60,7 @@ class SerializationTest {
     }
     uman = gson.fromJson(json, Summoner.class);
     Assertions.assertEquals(uman.getAccountId(), 23548296);
+    Assertions.assertEquals(uman.getMatchHistoryUri(), null);
     Assertions.assertEquals(uman.getName(), "MurMakuun");
     Assertions.assertEquals(uman.getSummonerId(), 20411103);
     Assertions.assertEquals(uman.getRevisionDate(), 1539417890000L);
@@ -66,7 +71,7 @@ class SerializationTest {
   }
 
   @Test
-  void testMatchlistSerialization() {
+  void testMatchlistDeserialization() {
 
     String json;
     Matchlist matchlist;
@@ -87,7 +92,7 @@ class SerializationTest {
   }
 
   @Test
-  void testMatchParticipantFrameSerialization() {
+  void testMatchParticipantFrameDeserialization() {
 
     String json;
     MatchParticipantFrame matchParticipantFrame;
@@ -108,7 +113,7 @@ class SerializationTest {
   }
 
   @Test
-  void testMatchFrameSerialization() {
+  void testMatchFrameDeserialization() {
 
     String json;
     MatchFrame matchFrame;
@@ -132,7 +137,7 @@ class SerializationTest {
   }
 
   @Test
-  void testMatchTimelineSerialization() {
+  void testMatchTimelineDeserialization() {
 
     String json;
     MatchTimeline matchTimeline;
@@ -146,6 +151,78 @@ class SerializationTest {
     Assertions.assertEquals(matchTimeline.getFrames().size(), 38);
     Assertions.assertEquals(matchTimeline.getFrames().get(25).getParticipantFrames().size(), 10);
   }
+
+  @Test
+  void testParticipantStatsDeserialization() {
+
+    String json;
+    ParticipantStats participantStats;
+    try {
+      json = loadTestJsonFromFile("participantstats.json");
+    } catch (IOException e) {
+      throw new IllegalArgumentException("File failed to load");
+    }
+    participantStats = gson.fromJson(json, ParticipantStats.class);
+    Assertions.assertEquals(participantStats.getItems().length, 6);
+    Assertions.assertEquals(participantStats.getChampLevel(), 13);
+    Assertions.assertEquals(participantStats.getVisionScore(), 49);
+    Assertions.assertEquals(participantStats.getLargestCriticalStrike(), 1000);
+    Assertions.assertEquals(participantStats.getLargestMultiKill(), 1);
+    Assertions.assertEquals(participantStats.getLargestKillingSpree(), 2);
+    Assertions.assertEquals(participantStats.getMagicDamageDealtToChampions(), 5549);
+    Assertions.assertEquals(participantStats.getQuadraKills(), 1);
+    Assertions.assertEquals(participantStats.getTotalTimeCrowdControlDealt(), 182);
+    Assertions.assertEquals(participantStats.getMagicalDamageTaken(), 13797);
+    Assertions.assertEquals(participantStats.getLongestTimeSpentLiving(), 417);
+    Assertions.assertEquals(participantStats.getNeutralMinionsKilledEnemyJungle(), 1);
+    Assertions.assertEquals(participantStats.getNeutralMinionsKilledTeamJungle(), 1);
+    Assertions.assertEquals(participantStats.isFirstTowerAssist(), true);
+    Assertions.assertEquals(participantStats.getGoldEarned(), 9559);
+    Assertions.assertEquals(participantStats.getDeaths(), 8);
+    Assertions.assertArrayEquals(participantStats.getItems(), new int[]{3069, 3107, 2045, 2055, 3117, 3105});
+    Assertions.assertEquals(participantStats.getWardsPlaced(), 22);
+    Assertions.assertEquals(participantStats.getTurretKills(), 1);
+    Assertions.assertEquals(participantStats.getTripleKills(), 1);
+    Assertions.assertEquals(participantStats.getDamageSelfMitigated(), 20398);
+    Assertions.assertEquals(participantStats.getGoldSpent(), 8325);
+    Assertions.assertEquals(participantStats.getMagicDamageDealt(), 14548);
+    Assertions.assertEquals(participantStats.getKills(), 1);
+    Assertions.assertEquals(participantStats.getDoubleKills(), 3);
+    Assertions.assertEquals(participantStats.isFirstInhibitorKill(), true);
+    Assertions.assertEquals(participantStats.isFirstBloodAssist(), true);
+    Assertions.assertEquals(participantStats.getTrueDamageTaken(), 770);
+    Assertions.assertEquals(participantStats.isFirstBloodKill(), true);
+    Assertions.assertEquals(participantStats.getAssists(), 14);
+    Assertions.assertEquals(participantStats.getNeutralMinionsKilled(), 2);
+    Assertions.assertEquals(participantStats.getVisionWardsBoughtInGame(), 3);
+    Assertions.assertEquals(participantStats.getDamageDealtToTurrets(), 887);
+    Assertions.assertEquals(participantStats.getPhysicalDamageDealtToChampions(), 2092);
+    Assertions.assertEquals(participantStats.getPentaKills(), 5);
+    Assertions.assertEquals(participantStats.getTrueDamageDealt(), 750);
+    Assertions.assertEquals(participantStats.getTrueDamageDealtToChampions(), 10);
+    Assertions.assertEquals(participantStats.getChampLevel(), 13);
+    Assertions.assertEquals(participantStats.getParticipantId(), 1);
+    Assertions.assertEquals(participantStats.isFirstInhibitorAssist(), true);
+    Assertions.assertEquals(participantStats.getWardsKilled(), 4);
+    Assertions.assertEquals(participantStats.isFirstTowerKill(), true);
+    Assertions.assertEquals(participantStats.getTotalHeal(), 13051);
+    Assertions.assertEquals(participantStats.getTotalMinionsKilled(), 7);
+    Assertions.assertEquals(participantStats.getPhysicalDamageDealt(), 4926);
+    Assertions.assertEquals(participantStats.getDamageDealtToObjectives(), 887);
+    Assertions.assertEquals(participantStats.getSightWardsBoughtInGame(), 1);
+    Assertions.assertEquals(participantStats.getTotalDamageDealtToChampions(), 7642);
+    Assertions.assertEquals(participantStats.getTotalUnitsHealed(), 9);
+    Assertions.assertEquals(participantStats.getInhibitorKills(), 2);
+    Assertions.assertEquals(participantStats.getTotalDamageTaken(), 26979);
+    Assertions.assertEquals(participantStats.getTotalDamageDealt(), 20224);
+    Assertions.assertEquals(participantStats.getKillingSprees(), 10);
+    Assertions.assertEquals(participantStats.getTimeCCingOthers(), 59);
+    Assertions.assertEquals(participantStats.getPhysicalDamageTaken(),12411);
+    Assertions.assertEquals(participantStats.isWin(),true);
+    Assertions.assertEquals(participantStats.getUnrealKills(),1);
+
+  }
+
 
   private String loadTestJsonFromFile(String fileName) throws IOException {
     return FileUtils
