@@ -1,6 +1,7 @@
 package io.vertx.starter.riot;
 
 public class RiotAPI {
+
   public static final String RIOT_API_HOST_URL = "https://{region}.api.riotgames.com";
   public static final String GET_SUMMONER_BY_ACCOUNT_ID = "/lol/summoner/v3/summoners/by-account/{accountId}";
   public static final String GET_SUMMONER_BY_SUMMONER_NAME = "/lol/summoner/v3/summoners/by-name/{summonerName}";

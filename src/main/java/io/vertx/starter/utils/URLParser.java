@@ -11,9 +11,13 @@ public class URLParser {
       int start = sb.indexOf("{") + 1;
       int end = sb.indexOf("}");
       if (start < 0 || end < 0) {
-        throw new IllegalArgumentException("Wrong url or params");
+        throw new IllegalArgumentException("Wrong number of params");
       }
-      sb.replace(start - 1, end + 1, params.get(sb.substring(start, end)));
+      String param = params.get(sb.substring(start, end));
+      if (param == null) {
+        throw new IllegalArgumentException("Wrong parameter provided");
+      }
+      sb.replace(start - 1, end + 1, param);
     }
     return sb.toString();
   }
