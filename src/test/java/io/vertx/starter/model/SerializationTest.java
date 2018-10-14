@@ -2,7 +2,10 @@ package io.vertx.starter.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.vertx.starter.model.match.MatchSummary;
+import io.vertx.starter.model.match.Participant;
 import io.vertx.starter.model.match.ParticipantStats;
+import io.vertx.starter.model.match.deserializers.MatchSummaryDeserializer;
 import io.vertx.starter.model.match.deserializers.ParticipantStatsDeserializer;
 import io.vertx.starter.model.timeline.MatchFrame;
 import io.vertx.starter.model.timeline.MatchParticipantFrame;
@@ -10,6 +13,7 @@ import io.vertx.starter.model.timeline.MatchTimeline;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,7 +27,10 @@ class SerializationTest {
   static void setUp() {
     gson = new GsonBuilder()
         .registerTypeAdapter(ParticipantStats.class,
-            new ParticipantStatsDeserializer()).create();
+            new ParticipantStatsDeserializer())
+        .registerTypeAdapter(MatchSummary.class,
+            new MatchSummaryDeserializer())
+        .create();
   }
 
   @Test
@@ -179,7 +186,8 @@ class SerializationTest {
     Assertions.assertEquals(participantStats.isFirstTowerAssist(), true);
     Assertions.assertEquals(participantStats.getGoldEarned(), 9559);
     Assertions.assertEquals(participantStats.getDeaths(), 8);
-    Assertions.assertArrayEquals(participantStats.getItems(), new int[]{3069, 3107, 2045, 2055, 3117, 3105});
+    Assertions.assertArrayEquals(participantStats.getItems(),
+        new int[]{3069, 3107, 2045, 2055, 3117, 3105});
     Assertions.assertEquals(participantStats.getWardsPlaced(), 22);
     Assertions.assertEquals(participantStats.getTurretKills(), 1);
     Assertions.assertEquals(participantStats.getTripleKills(), 1);
@@ -217,10 +225,38 @@ class SerializationTest {
     Assertions.assertEquals(participantStats.getTotalDamageDealt(), 20224);
     Assertions.assertEquals(participantStats.getKillingSprees(), 10);
     Assertions.assertEquals(participantStats.getTimeCCingOthers(), 59);
-    Assertions.assertEquals(participantStats.getPhysicalDamageTaken(),12411);
-    Assertions.assertEquals(participantStats.isWin(),true);
-    Assertions.assertEquals(participantStats.getUnrealKills(),1);
+    Assertions.assertEquals(participantStats.getPhysicalDamageTaken(), 12411);
+    Assertions.assertEquals(participantStats.isWin(), true);
+    Assertions.assertEquals(participantStats.getUnrealKills(), 1);
 
+  }
+
+  @Test
+  void testMatchSummaryDeserialization() {
+    String json;
+    MatchSummary matchSummary;
+    try {
+      json = loadTestJsonFromFile("match.json");
+    } catch (IOException e) {
+      throw new IllegalArgumentException("File failed to load");
+    }
+    matchSummary = gson.fromJson(json, MatchSummary.class);
+    Map<Integer, Participant> participants = matchSummary.getParticipantsMap();
+    Assertions.assertNotNull(participants);
+    Participant participant = participants.get(1);
+    Assertions.assertNotNull(participant);
+    Assertions.assertEquals(participant.getChampionId(), 40);
+    Assertions.assertEquals(participant.getSpell1Id(),4);
+    Assertions.assertEquals(participant.getSpell2Id(), 7);
+    Summoner summoner = participant.getSummoner();
+    Assertions.assertNotNull(summoner);
+    Assertions.assertEquals(summoner.getMatchHistoryUri(), "/v1/stats/player_history/EUN1/39630110");
+    Assertions.assertEquals(summoner.getName(), "Goddèss0fLové");
+    Assertions.assertEquals(summoner.getSummonerId(), 34858586);
+    ParticipantStats participantStats = participant.getStats();
+    Assertions.assertNotNull(participantStats);
+    Assertions.assertEquals(participantStats.isWin(), true);
+    Assertions.assertEquals(participantStats.getMagicalDamageTaken(), 13797);
   }
 
 

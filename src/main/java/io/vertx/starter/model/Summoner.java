@@ -4,12 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Summoner {
 
-  @SerializedName("id")
+  @SerializedName(value = "id", alternate = {"summonerId"})
   private long summonerId;
   @SerializedName("currentPlatformId")
   private Region region;
   private long accountId;
   private int profileIconId;
+  @SerializedName(value = "name", alternate = {"summonerName"})
   private String name;
   private long summonerLevel;
   private long revisionDate;

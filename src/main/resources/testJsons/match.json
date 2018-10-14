@@ -226,7 +226,7 @@
         "totalPlayerScore": 0,
         "visionScore": 49,
         "unrealKills": 0,
-        "win": false,
+        "win": true,
         "objectivePlayerScore": 0,
         "largestCriticalStrike": 0,
         "totalDamageDealt": 20224,
