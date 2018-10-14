@@ -1,0 +1,22 @@
+{
+  "queueType": "RANKED_SOLO_5x5",
+  "hotStreak": true,
+  "miniSeries": {
+    "wins": 0,
+    "losses": 1,
+    "target": 2,
+    "progress": "LNN"
+  },
+  "wins": 160,
+  "veteran": true,
+  "losses": 141,
+  "playerOrTeamId": "5908",
+  "leagueName": "Elise's Berserkers",
+  "playerOrTeamName": "Dyrus",
+  "inactive": true,
+  "rank": "IV",
+  "freshBlood": true,
+  "leagueId": "3a14f910-fc6c-11e7-9e8c-c81f66cf135e",
+  "tier": "DIAMOND",
+  "leaguePoints": 87
+}
