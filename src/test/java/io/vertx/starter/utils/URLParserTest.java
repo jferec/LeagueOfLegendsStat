@@ -1,7 +1,7 @@
 package io.vertx.starter.utils;
 
-import static io.vertx.starter.riot.RiotAPI.GET_SUMMONER_BY_SUMMONER_NAME;
-import static io.vertx.starter.riot.RiotAPI.RIOT_API_HOST_URL;
+import static io.vertx.starter.riot.RiotAPIs.GET_SUMMONER_BY_SUMMONER_NAME;
+import static io.vertx.starter.riot.RiotAPIs.RIOT_API_HOST_URL;
 
 import io.vertx.starter.model.Region;
 import java.util.HashMap;
