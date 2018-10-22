@@ -1,7 +1,5 @@
 package io.vertx.starter.utils;
 
-import static io.vertx.starter.riot.RiotAPIs.GET_SUMMONER_BY_SUMMONER_NAME;
-import static io.vertx.starter.riot.RiotAPIs.RIOT_API_HOST_URL;
 
 import io.vertx.starter.model.Region;
 import java.util.HashMap;
@@ -10,6 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class URLParserTest {
+
+  private static final String RIOT_API_HOST_URL = "https://{region}.api.riotgames.com";
+  private static final String GET_SUMMONER_BY_SUMMONER_NAME = "/lol/summoner/v3/summoners/by-name/{summonerName}";
 
   @Test
   void testCorrectParams() {
@@ -29,7 +30,8 @@ class URLParserTest {
     Map<String, String> params = new HashMap<>();
     params.put(URLConstants.REGION, Region.NORTH_AMERICA.getName());
     params.put("abcdefgh", "illegalParam");
-    Assertions.assertEquals(URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params), null);
+    Assertions.assertNull(
+        URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params));
   }
 
   @Test
@@ -38,7 +40,8 @@ class URLParserTest {
     params.put(URLConstants.REGION, Region.NORTH_AMERICA.getName());
     params.put(URLConstants.ACCOUNT_ID, "someRandomAccountId");
     params.put(URLConstants.SUMMONER_ID, "someRandomSummonerId");
-    Assertions.assertEquals(URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params), null);
+    Assertions.assertNull(
+        URLParser.putParamsToURL(RIOT_API_HOST_URL + GET_SUMMONER_BY_SUMMONER_NAME, params));
   }
 
 }
