@@ -8,21 +8,22 @@ import io.vertx.starter.model.match.MatchSummary;
 import io.vertx.starter.model.timeline.MatchTimeline;
 import java.util.Map;
 import java.util.Set;
+import io.vertx.core.Future;
 
 public interface RiotAPIClient {
 
-  public Summoner getSummonerByAccountId(Map<String, String> params);
+  public Future<Summoner> getSummonerByAccountId(Map<String, String> params);
 
-  public Summoner getSummonerBySummonerName(Map<String, String> params);
+  public Future<Summoner> getSummonerBySummonerName(Map<String, String> params);
 
-  public Summoner getSummonerBySummonerId(Map<String, String> params);
+  public Future<Summoner> getSummonerBySummonerId(Map<String, String> params);
 
-  public MatchSummary getMatchByMatchId(Map<String, String> params);
+  public Future<MatchSummary> getMatchByMatchId(Map<String, String> params);
 
-  public MatchTimeline getMatchTimelineByMatchId(Map<String, String> params);
+  public Future<MatchTimeline> getMatchTimelineByMatchId(Map<String, String> params);
 
-  public Matchlist getMatchlistByAccountId(Map<String, String> params);
+  public Future<Matchlist> getMatchlistByAccountId(Map<String, String> params);
 
-  public Set<League> getLeaguesBySummonerId(Map<String, String> params);
+  public Future<Set<League>> getLeaguesBySummonerId(Map<String, String> params);
 
 }
