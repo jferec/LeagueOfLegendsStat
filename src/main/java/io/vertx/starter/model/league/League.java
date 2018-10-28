@@ -9,6 +9,15 @@ public class League {
   private int leaguePoints;
   private String queueType;
   private int wins;
+  private MiniSeries miniSeries;
+  private boolean hotStreak;
+  private boolean veteran;
+  private int losses;
+  private boolean freshBlood;
+  private String playerOrTeamName;
+  private boolean inactive;
+  private String playerOrTeamId;
+  private String leagueName;
 
   public Rank getRank() {
     return rank;
@@ -66,13 +75,4 @@ public class League {
     return leagueName;
   }
 
-  private MiniSeries miniSeries;
-  private boolean hotStreak;
-  private boolean veteran;
-  private int losses;
-  private boolean freshBlood;
-  private String playerOrTeamName;
-  private boolean inactive;
-  private String playerOrTeamId;
-  private String leagueName;
 }
